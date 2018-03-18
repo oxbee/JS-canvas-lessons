@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas2</title>
+<!--    <link rel="stylesheet" href="css/style.css"> -->
+	<style>
+		canvas {
+			background: #eee; 
+			display: block;
+			margin: 0 auto;
+		}
+
+		p  { width: 800px; margin: 0 auto; }
+		ol { width: 800px; margin: 0 auto; }
+
+	</style>
+</head>
+
+<body>
+
+
+<section>
+	<h1 align="center">Intro</h1>
+	<p>Аби підвести черту під попереднім заняттям, почнемо урок з простенької, але симпатичної, фігури. Тобі наполегливо пропонується вікдрити цю сторінку через улюблений IDE, та заглянути в js код який виводить цей малюнок на екран.
+	</p>
+</section>
+<canvas id="fig1" width="800" height="350"></canvas>
+
+<section>
+	<h1 align="center">Рекурсія</h1>
+	<p> Насправді рекурсія це дуже просто. Її суть полягає в тому, що функція визиває сама себе. Пам'ятаєш задачу з вивдом чорнобілих кіл в циклі? Нижче той самий результат досягається через рекурсію. 
+	</p>
+</section>
+<canvas id="fig2" width="800" height="350"></canvas>
+
+<section>
+	<h1 align="center">Рекурсивне дерево</h1>
+	<p> Якщо оновити сторінку - дререво стане іншим.
+Прицип малювання дерева доволі простий. Програма вміє малювати лише пряму лінію заданої довжини під певним кутом. Тобто початок лінії задається абсолютними координатами X та Y. Знаючи бажану довжину лінії та кут її нахилу (відносно вертикальної лінії) програма визначає абсолютні координати кінцевої точки лінії. Перехід від відносних координат до абсолютних робиться по формулі:
+	<img src="pic/cosin.jpg" alt="Trigonometria" height="200" width="400">
+Так це тригонометрія в дії :) Якщо оновити сторінку - то буде намальовано інше дерево.
+		</p>
+	</section>
+<canvas id="fig3" width="1000" height="750"></canvas>
+
+<section>
+	<h1 align="center">Завдання</h1>
+	<ol>
+  		<li>Погратися з рекурсивним малюванням кіл. Спробуй міняти координати наступного кола. Пояснити принцип роботи програми.</li>
+  		<li><p>Намалювати рівносторонній N-кутник, використовуючи функцію аналог фунції stem. Кут повороту дорівнює 360/N
+<img src="pic/polygons.jpg" alt="Polygons" height="200" width="400"> </p><p>Бонус бали за зірочку :)</p>
+</li>
+  		<li>Намалювати <a href="https://en.wikipedia.org/wiki/Sierpinski_triangle"> трикутник Серпинського</a></li>
+
+	</ol> 
+</section>
+
+
+<script src="js/canvas/lines.js"></script>
+<script src="js/canvas/recursionCircles.js"></script>
+<script src="js/canvas/recursionTree.js"></script>
+
+<script>
+	// Intro
+    var canvas = document.getElementById("fig1");
+    var ctx = canvas.getContext("2d");
+	lines(ctx, canvas.width/2,  canvas.height/2, canvas.height/2, 45);
+
+    canvas = document.getElementById("fig2");
+    ctx = canvas.getContext("2d");
+	recursionCircles(ctx, canvas.width/2,  canvas.height/2 , canvas.height/2.4, 10, false);
+
+canvas = document.getElementById("fig3");
+    ctx = canvas.getContext("2d");
+	tree(ctx, canvas.width/2,  canvas.height, 200);
+
+</script>
+
+</html>
+</body>
