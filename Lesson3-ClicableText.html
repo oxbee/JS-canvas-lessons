@@ -1,0 +1,27 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<p class="clickable">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum ante nunc. Proin sit amet sem purus. Aliquam malesuada egestas metus, vel ornare purus sollicitudin at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta turpis ut mi pharetra rhoncus. Ut accumsan, leo quis hendrerit luctus, purus nunc suscipit libero, sit amet lacinia turpis neque gravida sapien. Nulla facilisis neque sit amet lacus ornare consectetur non ac massa. In purus quam, imperdiet eget tempor eu, consectetur eget turpis. Curabitur mauris neque, venenatis a sollicitudin consectetur, hendrerit in arcu.
+</p>
+<script>
+$(".clickable").click(function(e){
+         s = window.getSelection();
+         var range = s.getRangeAt(0);
+         var node = s.anchorNode;
+
+         // Find starting point
+         while(range.toString().indexOf(' ') != 0) {
+            range.setStart(node,(range.startOffset -1));
+         }
+         range.setStart(node, range.startOffset +1);
+
+         // Find ending point
+         do{
+           range.setEnd(node,range.endOffset + 1);
+
+        }while(range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
+
+        // Alert result
+        var str = range.toString().trim();
+        alert(str);
+       });
+</script>
