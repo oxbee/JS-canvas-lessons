@@ -1,27 +1,58 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Selectable Text</title>
+</head>
+
+<body>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+
+
 <p class="clickable">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum ante nunc. Proin sit amet sem purus. Aliquam malesuada egestas metus, vel ornare purus sollicitudin at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta turpis ut mi pharetra rhoncus. Ut accumsan, leo quis hendrerit luctus, purus nunc suscipit libero, sit amet lacinia turpis neque gravida sapien. Nulla facilisis neque sit amet lacus ornare consectetur non ac massa. In purus quam, imperdiet eget tempor eu, consectetur eget turpis. Curabitur mauris neque, venenatis a sollicitudin consectetur, hendrerit in arcu.
 </p>
+
 <script>
-$(".clickable").click(function(e){
+//$(".clickable").click(function(e){
+document.addEventListener('click', function(e) {
+  // class selector js
+  console.group("onClick");
          s = window.getSelection();
-         var range = s.getRangeAt(0);
+         var range = s.getRangeAt(0); // multiple selections MIGHT be possible
          var node = s.anchorNode;
 
          // Find starting point
-         while(range.toString().indexOf(' ') != 0) {
-            range.setStart(node,(range.startOffset -1));
+         text = range.toString();
+         while(text[0] != ' ') {
+           //console.log("Range.start", range.startOffset);
+           //console.log("Range length", text.length);
+
+           range.setStart(node, (range.startOffset -1));
+           text = range.toString();
          }
-         range.setStart(node, range.startOffset +1);
+         //range.setStart(node, range.startOffset +1);
 
          // Find ending point
-         do{
-           range.setEnd(node,range.endOffset + 1);
+         while(text[text.length -1] != ' ' && text.charCodeAt(text.length -1) > 20) {
+           //console.log("Range.end", range.endOffset);
+           console.log("end", text.charCodeAt(text.length -1));
+           range.setEnd(node, (range.endOffset +1));
+           text = range.toString();
+         }
+         //range.setEnd(node, range.endOffset -1);
 
-        }while(range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
+        s = document.createElement("b");
+
+        range.surroundContents(s);
 
         // Alert result
-        var str = range.toString().trim();
-        alert(str);
+        //var str = range.toString().trim();
+        // alert(str);
+  console.groupEnd();
        });
 </script>
+</body>
+</html>
