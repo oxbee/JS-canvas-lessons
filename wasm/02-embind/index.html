@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>WASM embind test</title>
+  </head>
+
+  <body>
+    <script>
+      var Module = {
+        onRuntimeInitialized: function() {
+          //console.log('lerp result: ' + Module.lerp(1, 2, 0.5));
+          var instance = new Module.MyClass(10, "hello");
+          instance.incrementX();
+          console.log(instance.x); // 11
+          instance.x = 20; // 20
+          console.log(instance.x); // 20
+          console.log(Module.MyClass.getStringFromInstance(instance)); // "hello"
+          instance.delete();
+        }
+      };
+    </script>
+    <script src="myclass.js"></script>
+  </body>
+
+</html>

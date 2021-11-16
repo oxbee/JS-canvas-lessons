@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>WASM instantiateStreaming() test</title>
+  </head>
+
+  <body>
+    <script>
+      // The net result of this is that we call our exported WebAssembly func
+      // exported_func, which in turn calls our imported JavaScript function
+      // imported_func, which logs the value provided inside the WebAssembly
+      // instance (42) to the console.
+      var importObject = { imports: { imported_func: arg => console.log(arg) } };
+      WebAssembly.instantiateStreaming(fetch('simple.wasm'), importObject)
+      .then(obj => obj.instance.exports.exported_func());
+
+      // Passing two primitive arguments
+      WebAssembly.instantiateStreaming(fetch('add.wasm'))
+      .then(obj => {
+        var sum = obj.instance.exports.add(5, 4);
+        console.log("Sum is "+sum);
+
+        sum = obj.instance.exports.add(2, 2);
+        console.log("Sum is "+sum);
+
+        var counter = obj.instance.exports.counter();
+        console.log("Total performed sum operations "+counter);
+
+        // TODO: Need to properly allocate memmory for this function call
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory
+        //var spaceIdx = obj.instance.exports.getFirstSpaceIdx("Hello world");
+        //console.log("First space idx "+spaceIdx);
+      });
+
+    </script>
+  </body>
+
+</html>
