@@ -19,16 +19,18 @@
 
 <body>
 
-<p id="text">
+<p id="document">
+    <!--
     <span id="1">Lorem</span>
     <span id="2">ipsum</span>
     <span id="3">dolor</span>
+    -->
 </p>
 
 <script>
 
 function myOnClick(e) {
-  if (e.srcElement.id === "text") {
+  if (e.srcElement.id === "document") {
     // TODO: fix mouse selection
     return;
   }
@@ -42,7 +44,21 @@ function myOnClick(e) {
   }
 }
 
-document.getElementById("text").addEventListener('click', myOnClick );
+let doc = document.getElementById("document");
+doc.addEventListener('click', myOnClick);
+
+let text = ["Lorem", "ipsum", "dolor", "sit", "amet", ",", "consectetur", "adipiscing", "elit", ",", "sed", "do"];
+
+var idx = 10;
+
+for (const word of text) {
+  let span = document.createElement('span');
+  span.innerHTML = word;
+  span.id = idx++;
+
+  doc.appendChild(span);
+  doc.appendChild(document.createTextNode(" "));
+}
 
 </script>
 </body>
