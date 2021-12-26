@@ -49,17 +49,40 @@ doc.addEventListener('click', myOnClick);
 
 var idx = 10;
 
+function isAlpha(char) {
+  return char.toLowerCase() != char.toUpperCase()
+}
+
+addText("'Oh, you can't help that,' said the Cat: 'we're all mad here. I'm mad. You're mad.'");
+
+// TODO: does not support new lines
 function addText(text)
 {
-  var words = text.split(/\s+/);
-  for (const word of words) {
-    let span = document.createElement('span');
-    span.textContent = word;
-    //span.innerHTML = word;
-    span.id = idx++;
+  var words = text.split(' ');///\s+/);
+  //var words = text.split(/(?=[.\s]|\b)/);//RegExp(/^\p{L}/,'u').test(text));
+  //var words = text.split(/^\p{L}/,'u');
 
+  for (const word of words) {
+    var s, e;
+
+    for (s = 0; s < word.length    && !isAlpha(word[s]); s++) { }
+    for (e = word.length-1; e >= 0 && !isAlpha(word[e]); e--) { }
+    e++;
+
+    var start = word.slice(0, s);
+    var end   = word.slice(e, word.length) + ' ';
+
+    let span = document.createElement('span');
+    span.id = idx++;
+    //span.textContent = word.slice(s, e);
+    span.innerHTML = word.slice(s, e);
+
+    //console.log("->["+start+"] ["+word.slice(s, e)+"] ["+end+"]");
+
+    if (start)
+      doc.appendChild(document.createTextNode(start));
     doc.appendChild(span);
-    doc.appendChild(document.createTextNode(" "));
+    doc.appendChild(document.createTextNode(end));
   }
 }
 </script>
